@@ -181,10 +181,23 @@ export default class ApiService {
     //PAYMMENT 
     //funtion to create payment intent
     static async proceedForPayment(body) {
-        const resp = await axios.post(`${this.BASE_URL}/payments/pay`, body, {
-            headers: this.getHeader()
-        });
-        return resp.data; //return the strip transaction id for this transaction
+        try {
+            const resp = await axios.post(`${this.BASE_URL}/payments/pay`, body, {
+                headers: this.getHeader()
+            });
+            return resp.data; //return the strip transaction id for this transaction
+        } catch (error) {
+            if (error.response) {
+                // Server responded with error status
+                throw new Error(`Payment server error: ${error.response.status} - ${error.response.data?.message || 'Unknown error'}`);
+            } else if (error.request) {
+                // Request made but no response received
+                throw new Error('Payment server is not responding. The server may be sleeping or down.');
+            } else {
+                // Something else happened
+                throw new Error(`Payment request failed: ${error.message}`);
+            }
+        }
     }
 
     //TO UPDATE PAYMENT WHEN IT HAS BEEN COMPLETED

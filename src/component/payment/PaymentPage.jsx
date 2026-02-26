@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PaymentForm from "./PaymentForm";
+import PaymentFallback from "./PaymentFallback";
 import ApiService from "../../service/ApiService";
 
 
@@ -25,7 +26,14 @@ const PaymentPage = () => {
                 setClientSecret(uniquePaymentSecreet);
             } catch (error) {
                 console.log(error)
-                setError(error.response?.data?.message || error.message)
+                // Handle different types of errors
+                if (error.message.includes('server is not responding')) {
+                    setError('Payment server is temporarily unavailable. Please try again in a few moments.');
+                } else if (error.message.includes('server error')) {
+                    setError('Payment server error. Please contact support if the issue persists.');
+                } else {
+                    setError(error.message || 'An unexpected error occurred. Please try again.');
+                }
             }
         };
         fetchClientSecrete();
@@ -34,6 +42,34 @@ const PaymentPage = () => {
 
 
     if (error) {
+        // Show fallback UI for backend connection issues
+        if (error.includes('server is not responding') || error.includes('temporarily unavailable')) {
+            return (
+                <PaymentFallback 
+                    bookingReference={bookingReference}
+                    amount={amount}
+                    onRetry={() => {
+                        setError(null);
+                        // Retry the payment intent fetch
+                        const fetchClientSecrete = async () => {
+                            try {
+                                const paymentData = {bookingReference, amount};
+                                const uniquePaymentSecreet = await ApiService.proceedForPayment(paymentData);
+                                setClientSecret(uniquePaymentSecreet);
+                            } catch (error) {
+                                console.log(error);
+                                if (error.message.includes('server is not responding')) {
+                                    setError('Payment server is temporarily unavailable. Please try again in a few moments.');
+                                } else {
+                                    setError(error.message || 'An unexpected error occurred. Please try again.');
+                                }
+                            }
+                        };
+                        fetchClientSecrete();
+                    }}
+                />
+            );
+        }
         return <div className="error-message">{error}</div>
     }
 

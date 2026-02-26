@@ -1,0 +1,207 @@
+/* Network Diagnostics Styles */
+.network-diagnostics {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.diagnostics-content {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.diagnostics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.diagnostics-header h3 {
+  margin: 0;
+  color: var(--premium-black);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.status-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.status-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.status-label {
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.status-value {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.error-details {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.error-details h4 {
+  margin: 0 0 0.5rem 0;
+  color: #dc2626;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #7f1d1d;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  background: #fee2e2;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border-left: 4px solid #dc2626;
+}
+
+.diagnostics-info {
+  margin: 1.5rem 0;
+}
+
+.diagnostics-info h4 {
+  margin: 0 0 1rem 0;
+  color: var(--premium-black);
+  font-size: 1.1rem;
+}
+
+.diagnostics-info ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.diagnostics-info li {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.diagnostics-info strong {
+  color: var(--premium-black);
+}
+
+.diagnostics-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e5e7eb;
+}
+
+.retry-button {
+  background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(197, 160, 89, 0.3);
+}
+
+.timestamp {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .diagnostics-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .diiagnostics-header h3 {
+    font-size: 1.2rem;
+  }
+  
+  .status-item {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .network-diagnostics {
+    padding: 1rem;
+  }
+  
+  .diagnostics-content {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .diagnostics-header {
+    margin-bottom: 1rem;
+  }
+  
+  .retry-button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
